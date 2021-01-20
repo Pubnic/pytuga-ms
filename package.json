@@ -1,0 +1,14 @@
+{
+    "name": "template-ms",
+    "version": "0.0.1",
+    "scripts": {
+        "install:dev": "sls requirements install",
+        "start:dev": "sls invoke local --function app",
+        "deploy:dev": "sls deploy",
+        "preinstall": "npx only-allow yarn"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "serverless-python-requirements": "^5.1.0"
+    }
+}

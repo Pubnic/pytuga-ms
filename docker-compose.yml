@@ -1,0 +1,11 @@
+version: '3'
+services:
+  template-ms:
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - "5000:5000"
+    environment:
+      - ENVIRONMENT=DEVELOPMENT
+      - DOPPLER_TOKEN=<your-doppler-token>

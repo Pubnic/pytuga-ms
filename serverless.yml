@@ -1,0 +1,42 @@
+service: template-ms
+provider:
+  name: aws
+  stackName: template-ms
+  runtime: python3.8
+  region: sa-east-1
+  memorySize: 128
+  timeout: 30
+functions:
+  app:
+    handler: app.handler
+    environment:
+      DOPPLER_TOKEN: ${env:DOPPLER_TOKEN}
+    events:
+      - alb:
+          listenerArn: adicionarDepois
+          priority: 0
+          conditions:
+            path: /template-ms
+            method:
+              - GET
+              - POST
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+package:
+  exclude:
+    - node_modules/**
+    - package.json
+    - package-lock.json
+    - yarn.lock
+    - start.py
+    - Dockerfile
+    - docker-compose.yml
+    - __pycache__
+    - .gitignore
+    - .app.log
+    - .flake8
+    - src/tests/**
+    - test.py
+plugins:
+  - serverless-python-requirements
