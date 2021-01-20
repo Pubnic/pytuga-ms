@@ -1,7 +1,7 @@
-service: template-ms
+service: pytuga-ms
 provider:
   name: aws
-  stackName: template-ms
+  stackName: pytuga-ms
   runtime: python3.8
   region: sa-east-1
   memorySize: 128
@@ -16,7 +16,7 @@ functions:
           listenerArn: adicionarDepois
           priority: 0
           conditions:
-            path: /template-ms
+            path: /pytuga-ms
             method:
               - GET
               - POST

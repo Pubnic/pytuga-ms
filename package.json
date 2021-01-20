@@ -1,5 +1,5 @@
 {
-    "name": "template-ms",
+    "name": "pytuga-ms",
     "version": "0.0.1",
     "scripts": {
         "install:dev": "sls requirements install",
