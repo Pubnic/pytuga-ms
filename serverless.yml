@@ -2,8 +2,8 @@ service: pytuga-ms
 provider:
   name: aws
   stackName: pytuga-ms
-  runtime: python3.8
-  region: sa-east-1
+  runtime: python3.6
+  region: us-east-1
   memorySize: 128
   timeout: 30
 functions:
@@ -12,17 +12,15 @@ functions:
     environment:
       DOPPLER_TOKEN: ${env:DOPPLER_TOKEN}
     events:
-      - alb:
-          listenerArn: adicionarDepois
-          priority: 0
-          conditions:
-            path: /pytuga-ms
-            method:
-              - GET
-              - POST
+      - http: POST /
 custom:
   pythonRequirements:
     dockerizePip: non-linux
+  customDomain:
+    domainName: api.pubnic.com.br
+    basePath: 'pytuga'
+    stage: ${self:provider.stage}
+    createRoute53Record: true
 package:
   exclude:
     - node_modules/**
@@ -40,3 +38,4 @@ package:
     - test.py
 plugins:
   - serverless-python-requirements
+  - serverless-domain-manager
