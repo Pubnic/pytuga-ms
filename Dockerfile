@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.6
 
 RUN mkdir /code
 WORKDIR /code
@@ -10,6 +10,9 @@ RUN (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.dopple
 
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
+
+ADD requirements.in /code/
+RUN pip install --no-deps -r requirements.in
 
 ADD . /code/
 

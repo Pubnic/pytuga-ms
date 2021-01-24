@@ -1,21 +1,52 @@
-from random import randint
+import traceback
+import sys
+import contextlib
+from io import StringIO
 from mangum import Mangum
-from typing import Dict
+from pydantic import BaseModel
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from pytuga import exec
+from transpyler.translate.google_translate import GoogleTranslator
 
 
 app = FastAPI(title=__name__)
 
 
-@app.get('/')
-async def get_index() -> Dict:
-    return dict(status='OK')
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
+
+class Body(BaseModel):
+    code: str
+
+class Response(BaseModel):
+    response: str
+    error: bool = False
+    traceback: str = None
 
 
 @app.post('/')
-async def post_index(data: Dict) -> Dict:
-    return dict(id=randint(0, 99), **data), 201
+async def run(body: Body) -> Response:
+    with stdoutIO() as s:
+        try:
+            exec(body.code)
+            return Response(response=str(s.getvalue()))
+        except Exception as ex:
+            translator = GoogleTranslator('pt_BR')
+
+            error_traceback = str(s.getvalue())
+            traceback_translated = translator.google_translate(traceback.format_exc())
+            error_traceback += traceback_translated
+
+            error_message = translator.google_translate(str(ex))
+            return Response(response=error_message, error=True, traceback=error_traceback)
 
 
 @app.exception_handler(Exception)
