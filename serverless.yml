@@ -21,6 +21,10 @@ custom:
     basePath: 'pytuga'
     stage: ${self:provider.stage}
     createRoute53Record: true
+    certificateArn: arn:aws:acm:us-east-1:583704988389:certificate/cd492ce3-3010-4572-8b9b-6ebff8126a17
+    endpointType: 'regional'
+    securityPolicy: tls_1_2
+    apiType: rest
 package:
   exclude:
     - node_modules/**
