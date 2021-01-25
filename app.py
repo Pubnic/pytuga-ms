@@ -32,7 +32,7 @@ class Response(BaseModel):
     traceback: str = None
 
 
-@app.post('/')
+@app.post('/pytuga')
 async def run(body: Body) -> Response:
     with stdoutIO() as s:
         try:
