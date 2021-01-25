@@ -11,9 +11,6 @@ RUN (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.dopple
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 
-ADD requirements.in /code/
-RUN pip install --no-deps -r requirements.in
-
 ADD . /code/
 
 ENTRYPOINT ["doppler", "run", "--"]

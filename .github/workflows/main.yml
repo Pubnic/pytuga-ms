@@ -25,7 +25,7 @@ jobs:
     - name: Serverless Deploy
       uses: dhollerbach/github-action-serverless-with-python-requirements@master
       with:
-        args: '--stage dev'
+        args: '--stage production'
       env:
         DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

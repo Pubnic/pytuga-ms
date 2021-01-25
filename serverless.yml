@@ -12,22 +12,27 @@ functions:
     environment:
       DOPPLER_TOKEN: ${env:DOPPLER_TOKEN}
     events:
-      - http: POST /
+     - alb:
+        listenerArn: arn:aws:elasticloadbalancing:us-east-1:583704988389:listener/app/public-load-balancer/c8abde834611a9e2/491953bac048b0cf
+        priority: 1
+        conditions:
+          path: /pytuga
+          method:
+            - POST
 custom:
   pythonRequirements:
     dockerizePip: non-linux
-  customDomain:
-    domainName: api.pubnic.com.br
-    basePath: 'pytuga'
-    stage: ${self:provider.stage}
-    createRoute53Record: true
-    certificateArn: arn:aws:acm:us-east-1:583704988389:certificate/cd492ce3-3010-4572-8b9b-6ebff8126a17
-    endpointType: 'regional'
-    securityPolicy: tls_1_2
-    apiType: rest
+    useDownloadCache: false
+    useStaticCache: false
+    invalidateCaches: true
 package:
   exclude:
+    - .github
+    - .vscode
     - node_modules/**
+    - .editorconfig
+    - config.sh
+    - README.md
     - package.json
     - package-lock.json
     - yarn.lock
@@ -42,4 +47,3 @@ package:
     - test.py
 plugins:
   - serverless-python-requirements
-  - serverless-domain-manager

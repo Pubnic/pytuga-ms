@@ -10,6 +10,7 @@ mangum==0.10.0
 nltk==3.5
 polib==1.1.0
 pydantic==1.7.3
+pytuga @ git+https://github.com/vitornere/pytuga.git@b99cc739f39cdc8db48a6a8d5db2b26f38a0337e
 regex==2020.11.13
 starlette==0.13.6
 textblob==0.15.3
