@@ -19,6 +19,7 @@ functions:
           path: /pytuga
           method:
             - POST
+            - OPTIONS
 custom:
   pythonRequirements:
     dockerizePip: non-linux
