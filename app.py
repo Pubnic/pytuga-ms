@@ -6,11 +6,20 @@ from mangum import Mangum
 from pydantic import BaseModel
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pytuga import exec
 from transpyler.translate.google_translate import GoogleTranslator
 
 
 app = FastAPI(title=__name__)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 
 @contextlib.contextmanager
@@ -25,6 +34,7 @@ def stdoutIO(stdout=None):
 
 class Body(BaseModel):
     code: str
+
 
 class Response(BaseModel):
     response: str

@@ -4,8 +4,8 @@
     "private": true,
     "scripts": {
         "install:dev": "sls requirements install",
-        "start:dev": "sls invoke local --function app",
-        "deploy:dev": "sls deploy"
+        "start:dev": "sls invoke local --aws-profile pubnic",
+        "deploy:dev": "sls deploy --aws-profile pubnic"
     },
     "dependencies": {},
     "devDependencies": {
