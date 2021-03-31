@@ -67,11 +67,4 @@ async def handle_all_exceptions(request: Request, error: Exception):
     )
 
 
-def handler(event, context):
-    if event.get('multiValueQueryStringParameters', False) is False:
-        event['multiValueQueryStringParameters'] = None
-
-    asgi_handler = Mangum(app)
-    response = asgi_handler(event, context)  # Call the instance with the event arguments
-
-    return response
+handler = Mangum(app)
